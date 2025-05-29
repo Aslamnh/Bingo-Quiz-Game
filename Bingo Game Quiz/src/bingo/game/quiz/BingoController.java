@@ -18,12 +18,22 @@ public class BingoController {
     private MenuView viewMenu;
     private HistoryView viewHistory;
     
+    
+    public void Start(){
+            viewBingo.getBtnGenerateQuiz().setEnabled(false);
+            viewBingo.setVisible(false); //dinonaktifkan
+            viewMenu.setVisible(true); //diaktifkan diawal menjalankan kode
+            viewHistory.setVisible(false);
+        };
+    
     public BingoController(BingoModel model, BingoView viewBingo, MenuView viewMenu, HistoryView viewHistory) {
         this.model = model;
         this.viewBingo = viewBingo;
         this.viewMenu = viewMenu;
         this.viewHistory = viewHistory;
         
+        
+                
         //semua button disini dari BingoView dan MenuView
         // Main Menu (MainView)
         viewMenu.getBtnStartGame().addActionListener(e -> {
@@ -68,6 +78,7 @@ public class BingoController {
                     viewBingo.setVisible(true);
                 }
             });
+            
 
             // Tambahkan semua tombol ke panel
             panel.add(Box.createVerticalStrut(20));
@@ -91,6 +102,7 @@ public class BingoController {
         // Menu Bingo (BingoView)
         viewBingo.getBtnStartGame().addActionListener(e -> {
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
+            viewBingo.getBtnGenerateQuiz().setEnabled(true);
         });
         viewBingo.getBtnGenerateQuiz().addActionListener(e -> {
             //belom dimasukkin pertanyaannya

@@ -35,6 +35,8 @@ public class Main {
         }
         //</editor-fold>
 
+        
+            
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -42,11 +44,13 @@ public class Main {
                 BingoView viewBingo = new BingoView();
                 MenuView viewMenu = new MenuView();
                 HistoryView viewHistory = new HistoryView();
-                
                 BingoController controller = new BingoController(model, viewBingo, viewMenu, viewHistory);
-                viewBingo.setVisible(false); //dinonaktifkan
-                viewMenu.setVisible(true); //diaktifkan diawal menjalankan kode
-                viewHistory.setVisible(false);
+                
+                controller.Start();
+                
+//                viewBingo.setVisible(false); //dinonaktifkan
+//                viewMenu.setVisible(true); //diaktifkan diawal menjalankan kode
+//                viewHistory.setVisible(false);
             }
         });
     }

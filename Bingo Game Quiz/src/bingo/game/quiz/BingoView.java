@@ -134,6 +134,11 @@ public class BingoView extends javax.swing.JFrame {
         });
 
         btnGenerateQuiz.setText("Generate Quiz");
+        btnGenerateQuiz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateQuizActionPerformed(evt);
+            }
+        });
 
         btnEndGame.setText("End Game");
 
@@ -197,14 +202,13 @@ public class BingoView extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BingoPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(BingoPanelLayout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(player1Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(BingoPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(player2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(player2Panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -225,6 +229,10 @@ public class BingoView extends javax.swing.JFrame {
     private void btnStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartGameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnStartGameActionPerformed
+
+    private void btnGenerateQuizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateQuizActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGenerateQuizActionPerformed
 
     /**
      * @param args the command line arguments
