@@ -266,7 +266,7 @@ public class BingoModel {
             numbers[i - 1] = i;
         }
         List<Integer> numberList = Arrays.asList(numbers);
-        Collections.shuffle(numberList);
+//        Collections.shuffle(numberList);
         return numberList.toArray(new Integer[0]);
     }
     public void setDifficulty(Quiz q) {

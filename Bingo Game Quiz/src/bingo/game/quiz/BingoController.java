@@ -20,7 +20,7 @@ public class BingoController {
     private int currentPlayer = 1;
     
     public void Start(){
-            viewBingo.getBtnGenerateQuiz().setEnabled(false);
+            viewBingo.getbtnTryAgain().setEnabled(false);
             viewBingo.setVisible(false); //dinonaktifkan
             viewMenu.setVisible(true); //diaktifkan diawal menjalankan kode
             viewHistory.setVisible(false);
@@ -102,7 +102,7 @@ public class BingoController {
         // Menu Bingo (BingoView)
         viewBingo.getBtnStartGame().addActionListener(e -> {
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
-            viewBingo.getBtnGenerateQuiz().setEnabled(true);
+            viewBingo.getbtnTryAgain().setEnabled(true);
             Component[] tileButtons = viewBingo.getBoard().getComponents();
             for (Component comp : tileButtons) {
                 if (comp instanceof JButton) {
@@ -146,7 +146,7 @@ public class BingoController {
                 }
             }
         });
-        viewBingo.getBtnGenerateQuiz().addActionListener(e -> {
+        viewBingo.getbtnTryAgain().addActionListener(e -> {
             //belom dimasukkin pertanyaannya
             JFrame quizFrame = new JFrame("Quiz");
             quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
