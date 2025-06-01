@@ -41,15 +41,16 @@ class BingoBoard {
             }
         }
     }
-    public boolean checkWin() {
+    public boolean checkWin(int player) {
 	int[] rowCount = new int[5];
         int[] colCount = new int[5];
         int mainDiagonalCount = 0;
         int antiDiagonalCount = 0;
 	boolean menang = false;
+        JButton button;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (tiles[i][j].getMarked() == true) {			
+                if (tiles[i][j].getMarked() == true && tiles[i][j].getPlayerMark() == player ) {			
                     rowCount[i]++;
                     colCount[j]++;
 
@@ -57,7 +58,7 @@ class BingoBoard {
                     if (i + j == 4) antiDiagonalCount++;
 
                     if (rowCount[i] == 5 || colCount[j] == 5 || mainDiagonalCount == 5 || antiDiagonalCount == 5) {
-                        
+                    
                     menang = true;
                     }
                 }
@@ -119,13 +120,14 @@ class BingoBoard {
                 }
             }	
         }
-        checkWin();
+        checkWin(player);
     }
 }
 class BingoTile {
     private int number;
     private boolean marked = false;
     private int playerMark = 0; 
+ 
     //private Question question;
     private JButton button;
 	
@@ -135,7 +137,7 @@ class BingoTile {
         //this.question = model.generateQuiz();
     }
 
-	
+    
     public int getNumber() {
 	return number;
     }
