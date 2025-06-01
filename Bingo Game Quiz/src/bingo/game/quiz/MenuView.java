@@ -64,6 +64,11 @@ public class MenuView extends javax.swing.JFrame {
 
         btnStartGame.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnStartGame.setText("Start Game");
+        btnStartGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartGameActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -115,6 +120,10 @@ public class MenuView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartGameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnStartGameActionPerformed
 
     /**
      * @param args the command line arguments

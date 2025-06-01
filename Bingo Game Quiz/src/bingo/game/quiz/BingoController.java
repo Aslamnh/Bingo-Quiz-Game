@@ -4,9 +4,9 @@
  */
 package bingo.game.quiz;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 /**
  *
@@ -17,7 +17,7 @@ public class BingoController {
     private BingoView viewBingo;
     private MenuView viewMenu;
     private HistoryView viewHistory;
-    
+    private int currentPlayer = 1;
     
     public void Start(){
             viewBingo.getBtnGenerateQuiz().setEnabled(false);
@@ -103,6 +103,48 @@ public class BingoController {
         viewBingo.getBtnStartGame().addActionListener(e -> {
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
             viewBingo.getBtnGenerateQuiz().setEnabled(true);
+            Component[] tileButtons = viewBingo.getBoard().getComponents();
+            for (Component comp : tileButtons) {
+                if (comp instanceof JButton) {
+                    JButton button = (JButton) comp;
+                    button.addActionListener(ev -> {
+                        if ("X".equals(button.getText()) || "O".equals(button.getText())) {
+                            JOptionPane.showMessageDialog(viewBingo, "Tile sudah ditandai.");
+                            return;
+                        }
+                        int tileNumber = Integer.parseInt(button.getText());
+                        Question q = model.generateQuiz();
+                        JFrame quizFrame = new JFrame("Quiz");
+                        quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
+                        JLabel questionLabel = new JLabel(q.getText());
+                        JTextField answerField = new JTextField();
+                        JButton confirmBtn = new JButton("Confirm Answer");
+                        confirmBtn.addActionListener(ev2 -> {
+                            String answer = answerField.getText();
+                            try {
+                                if (answer.equals(Integer.toString(q.getAnswer()))) {
+                                    model.getBoard().markTile(tileNumber, currentPlayer);
+                                    JOptionPane.showMessageDialog(quizFrame, "Correct!");
+                                    quizFrame.dispose();
+                                    currentPlayer = (currentPlayer == 1) ? 2 : 1; // switch turns
+                                } else {
+                                    JOptionPane.showMessageDialog(quizFrame, "Wrong answer!");
+                                    quizFrame.dispose();
+                                    currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                                }
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(quizFrame, "Please enter a valid number.");
+                            }
+                        });
+                        quizFrame.add(questionLabel);
+                        quizFrame.add(answerField);
+                        quizFrame.add(confirmBtn);
+                        quizFrame.setSize(300, 150);
+                        quizFrame.setLocationRelativeTo(null);
+                        quizFrame.setVisible(true);
+                    });
+                }
+            }
         });
         viewBingo.getBtnGenerateQuiz().addActionListener(e -> {
             //belom dimasukkin pertanyaannya
@@ -118,7 +160,7 @@ public class BingoController {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String answer = answerField.getText();
-                    if (answer.equals(q.getAnswer())) {
+                    if (answer.equals(Integer.toString(q.getAnswer()))) {
                         JOptionPane.showMessageDialog(quizFrame, "Correct!");
                         quizFrame.dispose(); // ngeclose window
                     } else {

@@ -4,25 +4,12 @@
  */
 package bingo.game.quiz;
 
-import java.util.Random;
-
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Random;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 /**
  *
@@ -49,25 +36,131 @@ class BingoBoard {
             for (int j = 0; j < 5; j++) {
                 JButton button = (JButton) comps[i * 5 + j];  // Ambil label dari panel
                 int num = numbers[pos++];
-		tiles[i][j] = new BingoTile(num, button);   // Kirim label ke BingoTile
+		        tiles[i][j] = new BingoTile(num, button);   // Kirim label ke BingoTile
                 button.setText(String.valueOf(num));        // Tampilkan angka di GUI
             }
         }
+    }
+    public boolean checkWin() {
+	int[] rowCount = new int[5];
+        int[] colCount = new int[5];
+        int mainDiagonalCount = 0;
+        int antiDiagonalCount = 0;
+	boolean menang = false;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (tiles[i][j].getMarked() == true) {			
+                    rowCount[i]++;
+                    colCount[j]++;
+
+                    if (i == j) mainDiagonalCount++;
+                    if (i + j == 4) antiDiagonalCount++;
+
+                    if (rowCount[i] == 5 || colCount[j] == 5 || mainDiagonalCount == 5 || antiDiagonalCount == 5) {
+                        
+                    menang = true;
+                    }
+                }
+            }
+        }   
+        
+        if (menang) {
+            //System.out.println(playerName + " menang");
+            String[] bingo = {"B", "I", "N", "G", "O"};
+            // Cek baris
+    for (int i = 0; i < 5; i++) {
+        if (rowCount[i] == 5) {
+            for (int j = 0; j < 5; j++) {
+                tiles[i][j].getLabel().setText(bingo[j]);
+                tiles[i][j].getLabel().setBackground(Color.YELLOW);
+            }
+            return true;
+        }
+    }
+
+    // Cek kolom
+    for (int j = 0; j < 5; j++) {
+        if (colCount[j] == 5) {
+            for (int i = 0; i < 5; i++) {
+               tiles[i][j].getLabel().setText(bingo[i]);
+               tiles[i][j].getLabel().setBackground(Color.YELLOW);
+            }
+            return true;
+        }
+    }
+
+    // Cek diagonal utama
+    if (mainDiagonalCount == 5) {
+        for (int i = 0; i < 5; i++) {
+            tiles[i][i].getLabel().setText(bingo[i]);
+            tiles[i][i].getLabel().setBackground(Color.YELLOW);
+        }
+        return true;
+    }
+
+    // Cek diagonal sekunder
+    if (antiDiagonalCount == 5) {
+        for (int i = 0; i < 5; i++) {
+            tiles[i][4-i].getLabel().setText(bingo[i]);
+            tiles[i][4-i].getLabel().setBackground(Color.YELLOW);
+        }
+        return true;
+    }
+         
+    }
+        return false;
+    }
+
+        public void markTile(int number, int player) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (tiles[i][j].getNumber() == number && !tiles[i][j].getMarked()) {
+                    tiles[i][j].mark(player);
+                }
+            }	
+        }
+        checkWin();
     }
 }
 class BingoTile {
     private int number;
     private boolean marked = false;
+    private int playerMark = 0; 
+    //private Question question;
     private JButton button;
 	
     public BingoTile(int number, JButton button) {
-	this.number = number;
+        this.number = number;
         this.button = button;
+        //this.question = model.generateQuiz();
     }
+
 	
     public int getNumber() {
 	return number;
     }
+
+    public boolean getMarked() {
+    return marked;
+    }
+
+    public JButton getLabel() {
+        return button;
+    }
+
+    public void mark(int player) {
+        marked = true;
+        playerMark = player;
+        button.setText(player == 1 ? "X" : "O");
+        button.setBackground(Color.GREEN);
+        button.setBackground(player == 1 ? Color.GREEN : Color.BLUE);
+    }
+    public int getPlayerMark() {
+        return playerMark;
+    }
+
+
+        
 }
 class Quiz {
     Random random = new Random();
@@ -160,6 +253,10 @@ public class BingoModel {
     private Player[] players = new Player[2];
     private BingoBoard board;
     private Quiz difficulty;
+
+    public BingoBoard getBoard() {
+        return board;
+    }
     
     public Integer[] generateRandomNumbers() {
         Integer[] numbers = new Integer[25];
