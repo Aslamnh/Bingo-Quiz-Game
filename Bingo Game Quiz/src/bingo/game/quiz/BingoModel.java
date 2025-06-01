@@ -21,13 +21,44 @@ class Player {
     private String name;
     private int winCount = 0;
     private int playerTurn = 1;
+    
+    public String getName() {
+        return name;
+    }
+
+    public int getWinCount() {
+        return winCount;
+    }
+
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public void setWinCount(int winCount) {
+        this.winCount = winCount;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+    
+    public void incrementWinCount() {
+        winCount++;
+    }
+    
 }
 class BingoBoard {
     private BingoTile[][] tiles = new BingoTile[5][5];
-    
+   // BingoView bingoview = new BingoView();
     BingoModel model = new BingoModel();
-    
+   // Player playerX = new Player();
+     private JPanel board;
     public BingoBoard(JPanel board) {
+        this.board = board;
         Component[] comps = board.getComponents();
         Integer[] numbers = model.generateRandomNumbers();
         int pos = 0;
@@ -58,8 +89,12 @@ class BingoBoard {
                     if (i + j == 4) antiDiagonalCount++;
 
                     if (rowCount[i] == 5 || colCount[j] == 5 || mainDiagonalCount == 5 || antiDiagonalCount == 5) {
-                    
+   
                     menang = true;
+                  
+                   //  playerX.incrementWinCount();
+                     //bingoview.getwin2Field().setText(Integer.toString(playerX.getWinCount()));
+        
                     }
                 }
             }
@@ -121,7 +156,32 @@ class BingoBoard {
             }	
         }
         checkWin(player);
+        
     }
+        
+        public void resetGame(){
+               this.model = new BingoModel(); // reset angka
+        Integer[] numbers = model.generateRandomNumbers();
+        Component[] comps = board.getComponents();
+        int pos = 0;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                JButton button = (JButton) comps[i * 5 + j];
+                int num = numbers[pos++];
+                tiles[i][j] = new BingoTile(num, button);
+                button.setText(String.valueOf(num));
+                button.setEnabled(true);
+                button.setBackground(null);
+        
+    }
+        }
+        
+        
+        
+        
+        
+}
 }
 class BingoTile {
     private int number;

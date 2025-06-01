@@ -19,6 +19,9 @@ public class BingoController {
     private HistoryView viewHistory;
     private int currentPlayer = 1;
     
+    
+  
+    
     public void Start(){
             viewBingo.getbtnTryAgain().setEnabled(false);
             viewBingo.setVisible(false); //dinonaktifkan
@@ -32,8 +35,11 @@ public class BingoController {
         this.viewMenu = viewMenu;
         this.viewHistory = viewHistory;
         
-        
-                
+        Player playerX1 = new Player();
+        playerX1.setName("1");
+    
+         Player playerX2 = new Player();
+        playerX2.setName("2");
         //semua button disini dari BingoView dan MenuView
         // Main Menu (MainView)
         viewMenu.getBtnStartGame().addActionListener(e -> {
@@ -101,6 +107,7 @@ public class BingoController {
         
         // Menu Bingo (BingoView)
         viewBingo.getBtnStartGame().addActionListener(e -> {
+            
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
             viewBingo.getbtnTryAgain().setEnabled(true);
             Component[] tileButtons = viewBingo.getBoard().getComponents();
@@ -126,6 +133,17 @@ public class BingoController {
                                     model.getBoard().markTile(tileNumber, currentPlayer);
                                     JOptionPane.showMessageDialog(quizFrame, "Correct!");
                                     quizFrame.dispose();
+                                    if(model.getBoard().checkWin(currentPlayer)){
+                                       if(playerX1.getName().equals(Integer.toString(currentPlayer))){
+                                          playerX1.incrementWinCount();
+                                         viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
+                                         
+                                       } else if(playerX2.getName().equals(Integer.toString(currentPlayer))){
+                                          playerX2.incrementWinCount();
+                                         viewBingo.getwin2Field().setText(Integer.toString(playerX2.getWinCount()));
+                                       }
+                                    }
+                                    
                                     currentPlayer = (currentPlayer == 1) ? 2 : 1; // switch turns
                                 } else {
                                     JOptionPane.showMessageDialog(quizFrame, "Wrong answer!");
@@ -147,34 +165,36 @@ public class BingoController {
             }
         });
         viewBingo.getbtnTryAgain().addActionListener(e -> {
-            //belom dimasukkin pertanyaannya
-            JFrame quizFrame = new JFrame("Quiz");
-            quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
+            model.getBoard().resetGame();
             
-            Question q = model.generateQuiz();
-            
-            JLabel questionLabel = new JLabel(q.getText());
-            JTextField answerField = new JTextField();
-            JButton confirmBtn = new JButton("Confirm Answer");
-            confirmBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String answer = answerField.getText();
-                    if (answer.equals(Integer.toString(q.getAnswer()))) {
-                        JOptionPane.showMessageDialog(quizFrame, "Correct!");
-                        quizFrame.dispose(); // ngeclose window
-                    } else {
-                        JOptionPane.showMessageDialog(quizFrame, "Wrong. Try again.");
-                    }
-                }
-            });
-            quizFrame.add(questionLabel);
-            quizFrame.add(answerField);
-            quizFrame.add(confirmBtn);
-
-            quizFrame.setSize(300, 150);
-            quizFrame.setLocationRelativeTo(null); // Center the window
-            quizFrame.setVisible(true);
+//            //belom dimasukkin pertanyaannya
+//            JFrame quizFrame = new JFrame("Quiz");
+//            quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
+//            
+//            Question q = model.generateQuiz();
+//            
+//            JLabel questionLabel = new JLabel(q.getText());
+//            JTextField answerField = new JTextField();
+//            JButton confirmBtn = new JButton("Confirm Answer");
+//            confirmBtn.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    String answer = answerField.getText();
+//                    if (answer.equals(Integer.toString(q.getAnswer()))) {
+//                        JOptionPane.showMessageDialog(quizFrame, "Correct!");
+//                        quizFrame.dispose(); // ngeclose window
+//                    } else {
+//                        JOptionPane.showMessageDialog(quizFrame, "Wrong. Try again.");
+//                    }
+//                }
+//            });
+//            quizFrame.add(questionLabel);
+//            quizFrame.add(answerField);
+//            quizFrame.add(confirmBtn);
+//
+//            quizFrame.setSize(300, 150);
+//            quizFrame.setLocationRelativeTo(null); // Center the window
+//            quizFrame.setVisible(true);
         });
         viewBingo.getBtnEndGame().addActionListener(e -> {
             
