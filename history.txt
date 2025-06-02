@@ -1,0 +1,9 @@
+Match between Player 1 and Player 2 is a tie with both having 0 wins - 06/02/25 08:49:58 PM WIB
+
+Round 1:
+Player 1 wins in 1 turns - 06/02/25 08:59:11 PM WIB 
+Score:
+1        :        2
+
+Player 1 Won the game with 1 wins against 2 - 06/02/25 08:59:14 PM WIB
+

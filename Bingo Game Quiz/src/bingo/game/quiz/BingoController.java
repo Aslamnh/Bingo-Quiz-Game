@@ -18,6 +18,16 @@ public class BingoController {
     private MenuView viewMenu;
     private HistoryView viewHistory;
     private int currentPlayer = 1;
+    private int currentRound = 1;
+    private int currentTurn = 1;
+
+    public int getRound() {
+        return currentRound;
+    }
+
+    public void setRound(int round) {
+        this.currentRound = round;
+    }
     
     
   
@@ -35,11 +45,11 @@ public class BingoController {
         this.viewMenu = viewMenu;
         this.viewHistory = viewHistory;
         
-        Player playerX1 = new Player();
-        playerX1.setName("1");
+        Player playerX1 = new Player("1");
+        //playerX1.setName("1");
     
-         Player playerX2 = new Player();
-        playerX2.setName("2");
+         Player playerX2 = new Player("2");
+        //playerX2.setName("2");
         //semua button disini dari BingoView dan MenuView
         // Main Menu (MainView)
         viewMenu.getBtnStartGame().addActionListener(e -> {
@@ -102,6 +112,7 @@ public class BingoController {
             
         });
         viewMenu.getBtnGameHistory().addActionListener(e -> {
+            viewHistory.loadHistoryFromFile();
             viewHistory.setVisible(true);
         });
         
@@ -136,18 +147,29 @@ public class BingoController {
                                     if(model.getBoard().checkWin(currentPlayer)){
                                        if(playerX1.getName().equals(Integer.toString(currentPlayer))){
                                           playerX1.incrementWinCount();
-                                         viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
+                                          viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
+                                          BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX1); 
+                                          JOptionPane.showMessageDialog(viewBingo, "Player 1 wins!"); 
+                                        
                                          
                                        } else if(playerX2.getName().equals(Integer.toString(currentPlayer))){
                                           playerX2.incrementWinCount();
                                          viewBingo.getwin2Field().setText(Integer.toString(playerX2.getWinCount()));
+                                         BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);  
+                                        JOptionPane.showMessageDialog(viewBingo, "Player 2 wins!");
                                        }
-                                    }
+                                    } else if (model.getBoard().checkTie()) {
+                                        BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2); 
+                                        JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
+
                                     
+                                    }
+                                    currentTurn++;
                                     currentPlayer = (currentPlayer == 1) ? 2 : 1; // switch turns
                                 } else {
                                     JOptionPane.showMessageDialog(quizFrame, "Wrong answer!");
                                     quizFrame.dispose();
+                                    currentTurn++;
                                     currentPlayer = (currentPlayer == 1) ? 2 : 1;
                                 }
                             } catch (NumberFormatException ex) {
@@ -165,6 +187,7 @@ public class BingoController {
             }
         });
         viewBingo.getbtnTryAgain().addActionListener(e -> {
+            currentRound++;
             model.getBoard().resetGame();
             
 //            //belom dimasukkin pertanyaannya
@@ -197,6 +220,9 @@ public class BingoController {
 //            quizFrame.setVisible(true);
         });
         viewBingo.getBtnEndGame().addActionListener(e -> {
+            if (!(playerX1 == null || playerX2 == null)) {
+                BingoModel.writeHistory(playerX1, playerX2);  
+        }
             
         });
         
