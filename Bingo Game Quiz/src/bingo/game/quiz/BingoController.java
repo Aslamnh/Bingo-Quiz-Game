@@ -29,9 +29,15 @@ public class BingoController {
         this.currentRound = round;
     }
     
-    
-  
-    
+    private JButton createSizedButton(String text, Dimension size) {
+        JButton button = new JButton(text);
+        button.setPreferredSize(size);
+        button.setMinimumSize(size);
+        button.setMaximumSize(size);
+        
+        return button;
+    }
+      
     public void Start(){
             viewBingo.getbtnTryAgain().setEnabled(false);
             viewBingo.setVisible(false); //dinonaktifkan
@@ -48,29 +54,44 @@ public class BingoController {
         Player playerX1 = new Player("1");
         //playerX1.setName("1");
     
-         Player playerX2 = new Player("2");
+        Player playerX2 = new Player("2");
         //playerX2.setName("2");
         //semua button disini dari BingoView dan MenuView
         // Main Menu (MainView)
         viewMenu.getBtnStartGame().addActionListener(e -> {
             //aksi button setelah diklik
             //viewBingo.setVisible(true);
-            //viewMenu.difficultyMenuView(); 
-            
+            //viewMenu.difficultyMenuView();
+
             JFrame frame = new JFrame("Choose Difficulty");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 250);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(400, 300); 
             frame.setLocationRelativeTo(null);
-            
+
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            
-            JButton btnBack = new JButton("Back");
-            JButton btnEasy = new JButton("Easy");
-            JButton btnNormal = new JButton("Normal");
-            JButton btnHard = new JButton("Hard");
-            
+            panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+            Dimension buttonSize = new Dimension(100, 50);
+
+            JLabel label = new JLabel("Choose a difficulty");
+            Font currentFont = label.getFont();
+            label.setFont(new Font(currentFont.getName(), currentFont.getStyle(), 20));
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton btnBack = createSizedButton("Back", buttonSize);
+            JButton btnEasy = createSizedButton("Easy", buttonSize);
+            JButton btnNormal = createSizedButton("Normal", buttonSize);
+            JButton btnHard = createSizedButton("Hard", buttonSize);
+
+            // Set alignment for buttons to center them horizontally within the BoxLayout
+            btnEasy.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnNormal.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnHard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnBack.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
             btnBack.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     frame.dispose();
@@ -78,39 +99,45 @@ public class BingoController {
             });
             btnEasy.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    model.setDifficulty(new Easy()); 
+                    model.setDifficulty(new Easy());
                     viewBingo.setVisible(true);
+                    frame.dispose();
                 }
             });
             btnNormal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    model.setDifficulty(new Normal()); 
+                    model.setDifficulty(new Normal());
                     viewBingo.setVisible(true);
+                    frame.dispose();
                 }
             });
             btnHard.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    model.setDifficulty(new Hard()); 
+                    model.setDifficulty(new Hard());
                     viewBingo.setVisible(true);
+                    frame.dispose();
                 }
             });
-            
+
 
             // Tambahkan semua tombol ke panel
+            panel.add(label);
+            panel.add(Box.createVerticalStrut(20));
+            panel.add(btnEasy);
+            panel.add(Box.createVerticalStrut(10));
+            panel.add(btnNormal);
+            panel.add(Box.createVerticalStrut(10));
+            panel.add(btnHard);
             panel.add(Box.createVerticalStrut(20));
             panel.add(btnBack);
-            panel.add(Box.createVerticalStrut(10));
-            panel.add(btnEasy);
-            panel.add(Box.createVerticalStrut(5));
-            panel.add(btnNormal);
-            panel.add(Box.createVerticalStrut(5));
-            panel.add(btnHard);
 
-            // Tampilkan UI
             frame.getContentPane().add(panel);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
-            
+
         });
+        
         viewMenu.getBtnGameHistory().addActionListener(e -> {
             viewHistory.loadHistoryFromFile();
             viewHistory.setVisible(true);
@@ -185,6 +212,7 @@ public class BingoController {
                     });
                 }
             }
+            
         });
         viewBingo.getbtnTryAgain().addActionListener(e -> {
             currentRound++;
