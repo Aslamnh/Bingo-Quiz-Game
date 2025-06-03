@@ -442,6 +442,14 @@ public class BingoModel {
             System.err.println("Failed to write game history: " + e.getMessage() + " - " + currentDate);
         }
     }
+        
+            public static void clearHistory() {    
+        try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", false))) {
+            writer.write("");
+        } catch (IOException e) {
+            System.err.println("Failed to clear history");
+        }
+    }
 
     
 }

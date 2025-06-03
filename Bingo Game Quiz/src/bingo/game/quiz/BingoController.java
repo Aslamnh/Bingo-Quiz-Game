@@ -368,5 +368,14 @@ public class BingoController {
         
         // Menu History (HistoryView)
         
+        viewHistory.getBtnClear().addActionListener(e -> {
+            BingoModel.clearHistory();
+            viewHistory.loadHistoryFromFile();
+        });
+        
+        viewHistory.getBtnBack().addActionListener(e -> {
+            viewHistory.dispose();
+        });
+        
     }
 }
