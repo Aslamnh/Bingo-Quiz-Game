@@ -241,9 +241,9 @@ public class BingoController {
         
         // Menu Bingo (BingoView)
         viewBingo.getBtnStartGame().addActionListener(e -> {
-            
+            viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
-            viewBingo.getbtnTryAgain().setEnabled(true);
+           
             Component[] tileButtons = viewBingo.getBoard().getComponents();
             for (Component comp : tileButtons) {
                 if (comp instanceof JButton) {
@@ -276,18 +276,19 @@ public class BingoController {
                                           viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
                                           BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX1); 
                                           JOptionPane.showMessageDialog(viewBingo, "Player 1 wins!"); 
-                                        
+                                         viewBingo.getbtnTryAgain().setEnabled(true);
                                          
                                        } else if(playerX2.getName().equals(Integer.toString(currentPlayer))){
                                           playerX2.incrementWinCount();
                                          viewBingo.getwin2Field().setText(Integer.toString(playerX2.getWinCount()));
                                          BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);  
                                         JOptionPane.showMessageDialog(viewBingo, "Player 2 wins!");
+                                         viewBingo.getbtnTryAgain().setEnabled(true);
                                        }
                                     } else if (model.getBoard().checkTie()) {
                                         BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2); 
                                         JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
-
+                                        viewBingo.getbtnTryAgain().setEnabled(true);
                                     
                                     }
                                     currentTurn++;
@@ -317,12 +318,13 @@ public class BingoController {
                     });
                 }
             }
-            
+            viewBingo.getBtnStartGame().setEnabled(false);
         });
         viewBingo.getbtnTryAgain().addActionListener(e -> {
             currentRound++;
             model.getBoard().resetGame();
-            
+            viewBingo.getroundCountField().setText(Integer.toString(currentRound));
+            viewBingo.getbtnTryAgain().setEnabled(false);
 //            //belom dimasukkin pertanyaannya
 //            JFrame quizFrame = new JFrame("Quiz");
 //            quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
@@ -356,7 +358,7 @@ public class BingoController {
             if (!(playerX1 == null || playerX2 == null)) {
                 BingoModel.writeHistory(playerX1, playerX2);  
         }
-            
+            System.exit(0);
         });
         
         // Menu History (HistoryView)
