@@ -48,6 +48,9 @@ public class BingoView extends javax.swing.JFrame {
     public JButton getBtnEndGame() {
         return btnEndGame;
     }
+    public JButton getBtnBack() {
+        return btnBack;
+    }
     public JPanel getBoard() {
         return board;
     }
@@ -74,6 +77,16 @@ public class BingoView extends javax.swing.JFrame {
         win2field1 = new javax.swing.JTextField();
         BingoPanel = new javax.swing.JPanel();
         board = new javax.swing.JPanel();
+        tiles16 = new javax.swing.JButton();
+        tiles17 = new javax.swing.JButton();
+        tiles18 = new javax.swing.JButton();
+        tiles19 = new javax.swing.JButton();
+        tiles20 = new javax.swing.JButton();
+        tiles21 = new javax.swing.JButton();
+        tiles22 = new javax.swing.JButton();
+        tiles23 = new javax.swing.JButton();
+        tiles24 = new javax.swing.JButton();
+        tiles25 = new javax.swing.JButton();
         tiles1 = new javax.swing.JButton();
         tiles2 = new javax.swing.JButton();
         tiles3 = new javax.swing.JButton();
@@ -89,16 +102,6 @@ public class BingoView extends javax.swing.JFrame {
         tiles13 = new javax.swing.JButton();
         tiles14 = new javax.swing.JButton();
         tiles15 = new javax.swing.JButton();
-        tiles16 = new javax.swing.JButton();
-        tiles17 = new javax.swing.JButton();
-        tiles18 = new javax.swing.JButton();
-        tiles19 = new javax.swing.JButton();
-        tiles20 = new javax.swing.JButton();
-        tiles21 = new javax.swing.JButton();
-        tiles22 = new javax.swing.JButton();
-        tiles23 = new javax.swing.JButton();
-        tiles24 = new javax.swing.JButton();
-        tiles25 = new javax.swing.JButton();
         btnStartGame = new javax.swing.JButton();
         btnTryAgain = new javax.swing.JButton();
         btnEndGame = new javax.swing.JButton();
@@ -112,13 +115,46 @@ public class BingoView extends javax.swing.JFrame {
         win2field = new javax.swing.JTextField();
         roundCountField = new javax.swing.JTextField();
         RoundLabel = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        BingoPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         BingoPanel.setPreferredSize(new java.awt.Dimension(650, 400));
 
+        board.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         board.setPreferredSize(new java.awt.Dimension(250, 250));
         board.setLayout(new java.awt.GridLayout(5, 5));
+        board.add(tiles16);
+        board.add(tiles17);
+        board.add(tiles18);
+        board.add(tiles19);
+
+        tiles20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tiles20ActionPerformed(evt);
+            }
+        });
+        board.add(tiles20);
+        board.add(tiles21);
+        board.add(tiles22);
+        board.add(tiles23);
+
+        tiles24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tiles24ActionPerformed(evt);
+            }
+        });
+        board.add(tiles24);
+
+        tiles25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tiles25ActionPerformed(evt);
+            }
+        });
+        board.add(tiles25);
 
         tiles1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,19 +185,15 @@ public class BingoView extends javax.swing.JFrame {
         board.add(tiles10);
         board.add(tiles11);
         board.add(tiles12);
+
+        tiles13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tiles13ActionPerformed(evt);
+            }
+        });
         board.add(tiles13);
         board.add(tiles14);
         board.add(tiles15);
-        board.add(tiles16);
-        board.add(tiles17);
-        board.add(tiles18);
-        board.add(tiles19);
-        board.add(tiles20);
-        board.add(tiles21);
-        board.add(tiles22);
-        board.add(tiles23);
-        board.add(tiles24);
-        board.add(tiles25);
 
         btnStartGame.setText("Start Game");
         btnStartGame.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +212,7 @@ public class BingoView extends javax.swing.JFrame {
         btnEndGame.setText("End Game");
 
         player1Panel.setBackground(new java.awt.Color(204, 204, 204));
+        player1Panel.setPreferredSize(new java.awt.Dimension(175, 75));
 
         LabelPlayer1.setText("Player 1");
 
@@ -190,16 +223,14 @@ public class BingoView extends javax.swing.JFrame {
         player1PanelLayout.setHorizontalGroup(
             player1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(player1PanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(player1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(player1PanelLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(LabelPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(player1PanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(winCount1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(win1field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(win1field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LabelPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         player1PanelLayout.setVerticalGroup(
             player1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +241,12 @@ public class BingoView extends javax.swing.JFrame {
                 .addGroup(player1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(winCount1)
                     .addComponent(win1field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         player2Panel1.setBackground(new java.awt.Color(204, 204, 204));
         player2Panel1.setForeground(new java.awt.Color(255, 255, 255));
+        player2Panel1.setPreferredSize(new java.awt.Dimension(175, 75));
 
         LabelPlayer2.setText("Player 2");
 
@@ -230,16 +262,16 @@ public class BingoView extends javax.swing.JFrame {
         player2Panel1.setLayout(player2Panel1Layout);
         player2Panel1Layout.setHorizontalGroup(
             player2Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player2Panel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LabelPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(player2Panel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(winCount3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(win2field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(player2Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(player2Panel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(winCount3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(win2field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LabelPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         player2Panel1Layout.setVerticalGroup(
             player2Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,69 +282,107 @@ public class BingoView extends javax.swing.JFrame {
                 .addGroup(player2Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(winCount3)
                     .addComponent(win2field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        roundCountField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roundCountFieldActionPerformed(evt);
+            }
+        });
+
         RoundLabel.setText("Round");
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout BingoPanelLayout = new javax.swing.GroupLayout(BingoPanel);
         BingoPanel.setLayout(BingoPanelLayout);
         BingoPanelLayout.setHorizontalGroup(
             BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BingoPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BingoPanelLayout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(RoundLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(roundCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(233, 233, 233))
+                        .addGap(36, 36, 36)
+                        .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(BingoPanelLayout.createSequentialGroup()
+                                .addComponent(RoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(roundCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(71, 71, 71)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(BingoPanelLayout.createSequentialGroup()
+                                .addComponent(btnStartGame)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnTryAgain, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnEndGame)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE))
                     .addGroup(BingoPanelLayout.createSequentialGroup()
-                        .addComponent(player1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(player2Panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(BingoPanelLayout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(btnStartGame)
-                .addGap(30, 30, 30)
-                .addComponent(btnTryAgain, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnEndGame)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(player2Panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                            .addComponent(player1Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
+
+        BingoPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, player1Panel, player2Panel1});
+
         BingoPanelLayout.setVerticalGroup(
             BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BingoPanelLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEndGame)
                     .addComponent(btnTryAgain)
-                    .addComponent(btnStartGame))
-                .addGap(28, 28, 28)
-                .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(roundCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RoundLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(player1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(player2Panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnStartGame)
+                    .addComponent(btnBack))
+                .addGap(26, 26, 26)
+                .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(BingoPanelLayout.createSequentialGroup()
+                        .addGroup(BingoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(roundCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RoundLabel))
+                        .addGap(41, 41, 41)
+                        .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BingoPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(player1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(player2Panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
+
+        BingoPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {player1Panel, player2Panel1});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BingoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(BingoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BingoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(BingoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 66, Short.MAX_VALUE))
         );
 
         pack();
@@ -341,6 +411,30 @@ public class BingoView extends javax.swing.JFrame {
     private void win2fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_win2fieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_win2fieldActionPerformed
+
+    private void roundCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundCountFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roundCountFieldActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void tiles20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiles20ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tiles20ActionPerformed
+
+    private void tiles24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiles24ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tiles24ActionPerformed
+
+    private void tiles25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiles25ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tiles25ActionPerformed
+
+    private void tiles13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiles13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tiles13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,9 +481,12 @@ public class BingoView extends javax.swing.JFrame {
     private javax.swing.JLabel LabelPlayer2;
     private javax.swing.JLabel RoundLabel;
     private javax.swing.JPanel board;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEndGame;
     private javax.swing.JButton btnStartGame;
     private javax.swing.JButton btnTryAgain;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel player1Panel;
     private javax.swing.JPanel player2Panel1;
     private javax.swing.JTextField roundCountField;

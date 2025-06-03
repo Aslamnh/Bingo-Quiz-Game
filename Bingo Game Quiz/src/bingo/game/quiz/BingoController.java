@@ -262,7 +262,7 @@ public class BingoController {
                         questionLabel = new JLabel(q.getText());
                         answerField = new JTextField();
                         confirmBtn = new JButton("Confirm Answer");
-                        turnDisplay = new JLabel("Player " + currentTurn + " turn", SwingConstants.CENTER);
+                        turnDisplay = new JLabel("Player " + currentPlayer + " turn", SwingConstants.CENTER);
                         confirmBtn.addActionListener(ev2 -> {
                             String answer = answerField.getText();
                             try {
