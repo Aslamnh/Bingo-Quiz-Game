@@ -34,8 +34,6 @@ public class Main {
             java.util.logging.Logger.getLogger(BingoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        
             
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -44,7 +42,8 @@ public class Main {
                 BingoView viewBingo = new BingoView();
                 MenuView viewMenu = new MenuView();
                 HistoryView viewHistory = new HistoryView();
-                BingoController controller = new BingoController(model, viewBingo, viewMenu, viewHistory);
+                QuizFrame viewQuiz = new QuizFrame();
+                BingoController controller = new BingoController(model, viewBingo, viewMenu, viewHistory, viewQuiz);
                 
                 controller.Start();
                 

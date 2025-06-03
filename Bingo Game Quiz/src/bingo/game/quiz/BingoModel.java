@@ -64,7 +64,7 @@ class BingoBoard {
    // BingoView bingoview = new BingoView();
     BingoModel model = new BingoModel();
    // Player playerX = new Player();
-     private JPanel board;
+    private JPanel board;
     public BingoBoard(JPanel board) {
         this.board = board;
         Component[] comps = board.getComponents();
@@ -73,12 +73,16 @@ class BingoBoard {
         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                JButton button = (JButton) comps[i * 5 + j];  // Ambil label dari panel
+                JButton button = (JButton) comps[i * 5 + j];
                 int num = numbers[pos++];
-		        tiles[i][j] = new BingoTile(num, button);   // Kirim label ke BingoTile
-                button.setText(String.valueOf(num));        // Tampilkan angka di GUI
+		tiles[i][j] = new BingoTile(num, button);
+                button.setText(String.valueOf(num));
             }
         }
+    }
+    
+    public BingoTile[][] getTiles() {
+        return tiles;
     }
     public boolean checkWin(int player) {
 	int[] rowCount = new int[5];
@@ -209,16 +213,21 @@ class BingoTile {
     private boolean marked = false;
     private int playerMark = 0; 
  
-    //private Question question;
+    private Question question;
     private JButton button;
+    
+    BingoModel model = new BingoModel();
 	
     public BingoTile(int number, JButton button) {
         this.number = number;
         this.button = button;
         //this.question = model.generateQuiz();
     }
-
     
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
     public int getNumber() {
 	return number;
     }
@@ -240,6 +249,9 @@ class BingoTile {
     }
     public int getPlayerMark() {
         return playerMark;
+    }
+    public Question getQuestion() {
+        return question;
     }
 
 
@@ -386,9 +398,16 @@ public class BingoModel {
                 s += num1 + " / " + num2 + " = ";
             }
         }
-        return new Question(s, ans);
-
-        
+        return new Question(s, ans);    
+    }
+    public void generateQuizForTiles() {
+        BingoTile[][] tiles = board.getTiles();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                Question q = generateQuiz();
+		tiles[i][j].setQuestion(q);
+            }
+        }
     }
 
     public static void writeHistory(Player p1, Player p2) {
