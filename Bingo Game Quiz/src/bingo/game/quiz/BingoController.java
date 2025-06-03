@@ -20,6 +20,21 @@ public class BingoController {
     private int currentPlayer = 1;
     private int currentRound = 1;
     private int currentTurn = 1;
+    
+    private JLabel timerLabel;
+    private JLabel questionLabel;
+    private JPanel optionsPanel;
+    private JButton submitButton;
+
+    //quiz components
+    private JLabel turnDisplay;
+    private JFrame quizFrame;
+    private JTextField answerField;
+    private JButton confirmBtn;
+            
+    private Timer quizTimer;
+    private final int QUIZ_TIME = 10;
+    private int remainingSeconds;
 
     public int getRound() {
         return currentRound;
@@ -36,6 +51,87 @@ public class BingoController {
         button.setMaximumSize(size);
         
         return button;
+    }
+    
+    private void setupTimer() {
+        remainingSeconds = QUIZ_TIME; // Reset time
+
+        quizTimer = new Timer(1000, new ActionListener() { // Timer fires every 1000ms (1 second)
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remainingSeconds--;
+                timerLabel.setText("Time: " + remainingSeconds + "s");
+
+                if (remainingSeconds <= 5) { // Change color when time is low
+                    timerLabel.setForeground(Color.ORANGE);
+                    if (remainingSeconds <= 0) {
+                        timerLabel.setText("Time: 0s - Time's Up!");
+                        quizTimer.stop(); // Stop the timer
+                        handleTimeUp(); // Call time's up logic
+                    }
+                }
+            }
+        });
+    }
+    
+    public void startQuiz(Question q) {
+        remainingSeconds = QUIZ_TIME; // Reset time for a new quiz
+        timerLabel.setText("Time: " + QUIZ_TIME + "s");
+        timerLabel.setForeground(Color.RED); // Reset color
+        questionLabel.setText(q.getText()); // Set your actual question here
+        // Reset options selection if applicable
+        // Enable options and submit button
+        submitButton.setEnabled(true);
+        enableOptions(true);
+        quizTimer.restart(); // Start or restart the timer
+    }
+    
+     private void handleSubmit() {
+        quizTimer.stop(); // Stop the timer when submitted
+        submitButton.setEnabled(false); // Disable submit button
+        enableOptions(false); // Disable options
+
+        // --- Your quiz answer checking logic here ---
+        // For example: check which radio button is selected
+        JRadioButton selectedOption = getSelectedRadioButton(optionsPanel);
+        if (selectedOption != null && selectedOption.getText().equals("4")) {
+            JOptionPane.showMessageDialog(quizFrame, "Correct Answer!");
+            // Trigger Bingo mark or next question
+        } else {
+            JOptionPane.showMessageDialog(quizFrame, "Incorrect Answer or No Answer Selected!");
+            // Trigger consequence for wrong answer or time up
+        }
+
+        // After some delay or action, you might start the next quiz
+        // new Timer(2000, e -> startQuiz()).setRepeats(false); // Example: start next quiz after 2 seconds
+    }
+     
+    private void handleTimeUp() {
+        JOptionPane.showMessageDialog(quizFrame, "Time's up! Your answer is not submitted.");
+        submitButton.setEnabled(false); // Disable submit button
+        enableOptions(false); // Disable options
+        // Add logic for what happens when time is up (e.g., mark square as failed, move to next question)
+    }
+    
+    private void enableOptions(boolean enable) {
+        for (Component comp : optionsPanel.getComponents()) {
+            if (comp instanceof JRadioButton) {
+                ((JRadioButton) comp).setEnabled(enable);
+            }
+        }
+    }
+
+    // Helper to get selected radio button
+    private JRadioButton getSelectedRadioButton(JPanel panel) {
+        for (Component comp : panel.getComponents()) {
+            if (comp instanceof JRadioButton) {
+                JRadioButton rb = (JRadioButton) comp;
+                if (rb.isSelected()) {
+                    return rb;
+                }
+            }
+        }
+        return null;
     }
       
     public void Start(){
@@ -159,11 +255,14 @@ public class BingoController {
                         }
                         int tileNumber = Integer.parseInt(button.getText());
                         Question q = model.generateQuiz();
-                        JFrame quizFrame = new JFrame("Quiz");
+                        quizFrame = new JFrame("Quiz");
                         quizFrame.setLayout(new GridLayout(3, 1, 10, 10));
-                        JLabel questionLabel = new JLabel(q.getText());
-                        JTextField answerField = new JTextField();
-                        JButton confirmBtn = new JButton("Confirm Answer");
+                        
+                        timerLabel = new JLabel("Time: " + QUIZ_TIME + "s", SwingConstants.CENTER);
+                        questionLabel = new JLabel(q.getText());
+                        answerField = new JTextField();
+                        confirmBtn = new JButton("Confirm Answer");
+                        turnDisplay = new JLabel("Player " + currentTurn + " turn", SwingConstants.CENTER);
                         confirmBtn.addActionListener(ev2 -> {
                             String answer = answerField.getText();
                             try {
@@ -203,12 +302,18 @@ public class BingoController {
                                 JOptionPane.showMessageDialog(quizFrame, "Please enter a valid number.");
                             }
                         });
+                        quizFrame.add(timerLabel);
                         quizFrame.add(questionLabel);
                         quizFrame.add(answerField);
                         quizFrame.add(confirmBtn);
+                        quizFrame.add(turnDisplay);
                         quizFrame.setSize(300, 150);
                         quizFrame.setLocationRelativeTo(null);
                         quizFrame.setVisible(true);
+                        
+                        // timer
+                        setupTimer();
+                        startQuiz(q);
                     });
                 }
             }
