@@ -356,8 +356,13 @@ public class BingoController {
         });
         viewBingo.getBtnEndGame().addActionListener(e -> {
             if (!(playerX1 == null || playerX2 == null)) {
-                BingoModel.writeHistory(playerX1, playerX2);  
+                BingoModel.writeHistory(playerX1, playerX2); 
+                if(model.getBoard().checkTie()){
+                 BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+            }
         }
+           
+            
             System.exit(0);
         });
         
