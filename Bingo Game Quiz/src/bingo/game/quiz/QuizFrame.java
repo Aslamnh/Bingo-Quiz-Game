@@ -71,6 +71,10 @@ public class QuizFrame extends javax.swing.JFrame {
     public void setTime(int time) {
         this.time = time;
     }
+    
+    public void setTurnLabel(String s) {
+        currentTurnLabel.setText(s);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

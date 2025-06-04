@@ -116,50 +116,49 @@ class BingoBoard {
             //System.out.println(playerName + " menang");
             String[] bingo = {"B", "I", "N", "G", "O"};
             // Cek baris
-    for (int i = 0; i < 5; i++) {
-        if (rowCount[i] == 5) {
-            for (int j = 0; j < 5; j++) {
-                tiles[i][j].getLabel().setText(bingo[j]);
-                tiles[i][j].getLabel().setBackground(Color.YELLOW);
-            }
-            return true;
-        }
-    }
-
-    // Cek kolom
-    for (int j = 0; j < 5; j++) {
-        if (colCount[j] == 5) {
             for (int i = 0; i < 5; i++) {
-               tiles[i][j].getLabel().setText(bingo[i]);
-               tiles[i][j].getLabel().setBackground(Color.YELLOW);
+                if (rowCount[i] == 5) {
+                    for (int j = 0; j < 5; j++) {
+                        tiles[i][j].getLabel().setText(bingo[j]);
+                        tiles[i][j].getLabel().setBackground(Color.YELLOW);
+                    }
+                    return true;
+                }
             }
-            return true;
-        }
-    }
 
-    // Cek diagonal utama
-    if (mainDiagonalCount == 5) {
-        for (int i = 0; i < 5; i++) {
-            tiles[i][i].getLabel().setText(bingo[i]);
-            tiles[i][i].getLabel().setBackground(Color.YELLOW);
-        }
-        return true;
-    }
+            // Cek kolom
+            for (int j = 0; j < 5; j++) {
+                if (colCount[j] == 5) {
+                    for (int i = 0; i < 5; i++) {
+                       tiles[i][j].getLabel().setText(bingo[i]);
+                       tiles[i][j].getLabel().setBackground(Color.YELLOW);
+                    }
+                    return true;
+                }
+            }
 
-    // Cek diagonal sekunder
-    if (antiDiagonalCount == 5) {
-        for (int i = 0; i < 5; i++) {
-            tiles[i][4-i].getLabel().setText(bingo[i]);
-            tiles[i][4-i].getLabel().setBackground(Color.YELLOW);
+            // Cek diagonal utama
+            if (mainDiagonalCount == 5) {
+                for (int i = 0; i < 5; i++) {
+                    tiles[i][i].getLabel().setText(bingo[i]);
+                    tiles[i][i].getLabel().setBackground(Color.YELLOW);
+                }
+                return true;
+            }
+
+            // Cek diagonal sekunder
+            if (antiDiagonalCount == 5) {
+                for (int i = 0; i < 5; i++) {
+                    tiles[i][4-i].getLabel().setText(bingo[i]);
+                    tiles[i][4-i].getLabel().setBackground(Color.YELLOW);
+                }
+                return true;
+            }     
         }
-        return true;
-    }
-         
-    }
         return false;
     }
 
-        public void markTile(int number, int player) {
+    public void markTile(int number, int player) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (tiles[i][j].getNumber() == number && !tiles[i][j].getMarked()) {
@@ -167,8 +166,7 @@ class BingoBoard {
                 }
             }	
         }
-        checkWin(player);
-        
+        checkWin(player);    
     }
         
         public void resetGame(){
