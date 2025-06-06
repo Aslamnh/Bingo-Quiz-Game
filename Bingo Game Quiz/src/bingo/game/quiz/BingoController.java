@@ -19,6 +19,10 @@ public class BingoController {
     private HistoryView viewHistory;
     private QuizFrame viewQuiz;
     
+    
+     
+   
+   
     private int currentPlayer = 1;
     private int currentRound = 1;
     private int currentTurn = 1;
@@ -98,6 +102,7 @@ public class BingoController {
     private void timeUp() {
         JOptionPane.showMessageDialog(quizFrame, "Time's up! Your answer is not submitted.");
         // Add logic for what happens when time is up (e.g., mark square as failed, move to next question)
+        BingoModel.logEvent("Player "  + currentPlayer + " was late, tile is not mark");
         viewQuiz.resetQuiz();
         viewQuiz.dispose();
         changePlayerTurn();
@@ -127,16 +132,19 @@ public class BingoController {
             playerX1.incrementWinCount();
             viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX1);
+            BingoModel.logEvent("Player 1 wins!");
             JOptionPane.showMessageDialog(viewBingo, "Player 1 wins!");
             viewBingo.getbtnTryAgain().setEnabled(true);
         } else if(playerX2.getName().equals(Integer.toString(currentPlayer))){
             playerX2.incrementWinCount();
             viewBingo.getwin2Field().setText(Integer.toString(playerX2.getWinCount()));
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+            BingoModel.logEvent("Player 2 wins!");
             JOptionPane.showMessageDialog(viewBingo, "Player 2 wins!");
             viewBingo.getbtnTryAgain().setEnabled(true);
         } else if (model.getBoard().checkTie()) {
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+            BingoModel.logEvent("Tie");
             JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
             viewBingo.getbtnTryAgain().setEnabled(true);
         }
@@ -172,6 +180,7 @@ public class BingoController {
         this.viewMenu = viewMenu;
         this.viewHistory = viewHistory;
         this.viewQuiz = viewQuiz;
+        model.setLogArea(viewBingo.getGameLogArea());
         
         playerX1 = new Player("1");
         //playerX1.setName("1");
@@ -264,17 +273,24 @@ public class BingoController {
             viewHistory.loadHistoryFromFile();
             viewHistory.setVisible(true);
         });
+        viewMenu.getBtnExit().addActionListener(e -> {
+           System.exit(0);
+        });
         
         // Menu Bingo (BingoView)
         viewBingo.getBtnStartGame().addActionListener(e -> {
             viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
-           
+           BingoModel.logEvent("Game Start !!!");
+            
             Component[] tileButtons = viewBingo.getBoard().getComponents();
             for (Component comp : tileButtons) {
+                
                 if (comp instanceof JButton) {
+                    
                     JButton button = (JButton) comp;
                     button.addActionListener(ev -> {
+                        BingoModel.logEvent("Player "  + currentPlayer + " Turn");
                         if ("X".equals(button.getText()) || "O".equals(button.getText())) {
                             JOptionPane.showMessageDialog(viewBingo, "Tile sudah ditandai.");
                             return;
@@ -313,6 +329,7 @@ public class BingoController {
                                 if (input == answer) {
                                     //System.out.println("Player " + currentPlayer);
                                     model.getBoard().markTile(tileNumber, currentPlayer);
+                                    BingoModel.logEvent("Player "  + currentPlayer + " is Correct!");
                                     JOptionPane.showMessageDialog(viewQuiz, "Correct!");
                                     handleSubmit();
                                     viewQuiz.dispose();
@@ -322,6 +339,7 @@ public class BingoController {
                                         changePlayerTurn();
                                     } 
                                 } else {
+                                    BingoModel.logEvent("Player "  + currentPlayer + " is wrong!");
                                     JOptionPane.showMessageDialog(viewQuiz, "Wrong answer!");
                                     //bikin jadi try again sampai waktu abis
             //                      viewQuiz.dispose();
@@ -371,6 +389,7 @@ public class BingoController {
 //            quizFrame.setVisible(true);
         });
         viewBingo.getBtnEndGame().addActionListener(e -> {
+            BingoModel.logEvent("== End game ==");
             if (!(playerX1 == null || playerX2 == null)) {
                 BingoModel.writeHistory(playerX1, playerX2); 
                 if(model.getBoard().checkTie()){
@@ -382,6 +401,10 @@ public class BingoController {
             System.exit(0);
         });
         
+        viewBingo.getBtnBack().addActionListener(e -> {
+            viewBingo.dispose();
+            
+        });
         // Menu History (HistoryView)
         
         viewHistory.getBtnClear().addActionListener(e -> {

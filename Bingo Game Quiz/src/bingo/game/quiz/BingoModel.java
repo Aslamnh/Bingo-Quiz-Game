@@ -187,9 +187,7 @@ class BingoBoard {
     }
         }
         
-        
-        
-        
+      
         
 }
     public boolean checkTie() {
@@ -205,6 +203,9 @@ class BingoBoard {
     }
     return true;
 }
+   
+    
+   
 }
 class BingoTile {
     private int number;
@@ -467,6 +468,22 @@ public class BingoModel {
             System.err.println("Failed to clear history");
         }
     }
+            //game log
+            
+            
+             public static StringBuilder gameLog = new StringBuilder();
+             private static JTextArea logArea;  
+        
+            public  void setLogArea(JTextArea logArea) {
+                this.logArea = logArea;
+            }
+        public static void logEvent(String message) {
+            gameLog.append(message).append("\n");
+
+            if (logArea != null) {
+                logArea.setText(gameLog.toString());
+            }
+           }
 
     
 }
