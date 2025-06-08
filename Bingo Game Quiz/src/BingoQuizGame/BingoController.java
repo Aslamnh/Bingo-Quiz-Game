@@ -113,6 +113,7 @@ public class BingoController {
         currentPlayer = (currentPlayer == 1) ? 2 : 1;
         viewQuiz.setTurnLabel("Current Turn: Player " + currentPlayer);
         System.out.println("Player: " + currentPlayer);
+        BingoModel.logEvent("Player "  + currentPlayer + " Turn");
     }
     
     private void enableOptions(boolean enable) {
@@ -282,6 +283,7 @@ public class BingoController {
             viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
            BingoModel.logEvent("Game Start !!!");
+           BingoModel.logEvent("Player "  + currentPlayer + " Turn");
             
             Component[] tileButtons = viewBingo.getBoard().getComponents();
             for (Component comp : tileButtons) {
@@ -290,7 +292,7 @@ public class BingoController {
                     
                     JButton button = (JButton) comp;
                     button.addActionListener(ev -> {
-                        BingoModel.logEvent("Player "  + currentPlayer + " Turn");
+                       
                         if ("X".equals(button.getText()) || "O".equals(button.getText())) {
                             JOptionPane.showMessageDialog(viewBingo, "Tile sudah ditandai.");
                             return;
