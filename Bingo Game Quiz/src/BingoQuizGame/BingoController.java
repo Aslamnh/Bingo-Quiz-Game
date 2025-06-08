@@ -173,6 +173,7 @@ public class BingoController {
             viewBingo.setVisible(false); //dinonaktifkan
             viewMenu.setVisible(true); //diaktifkan diawal menjalankan kode
             viewHistory.setVisible(false);
+            viewMenu.setLocationRelativeTo(null);
         };
     
     public BingoController(BingoModel model, BingoView viewBingo, MenuView viewMenu, HistoryView viewHistory, QuizFrame viewQuiz) {
@@ -233,6 +234,7 @@ public class BingoController {
                 public void actionPerformed(ActionEvent e) {
                     model.setDifficulty(new Easy());
                     viewBingo.setVisible(true);
+                    viewBingo.setLocationRelativeTo(null);
                     frame.dispose();
                 }
             });
@@ -240,6 +242,7 @@ public class BingoController {
                 public void actionPerformed(ActionEvent e) {
                     model.setDifficulty(new Normal());
                     viewBingo.setVisible(true);
+                    viewBingo.setLocationRelativeTo(null);
                     frame.dispose();
                 }
             });
@@ -247,6 +250,7 @@ public class BingoController {
                 public void actionPerformed(ActionEvent e) {
                     model.setDifficulty(new Hard());
                     viewBingo.setVisible(true);
+                    viewBingo.setLocationRelativeTo(null);
                     frame.dispose();
                 }
             });
@@ -273,6 +277,7 @@ public class BingoController {
         viewMenu.getBtnGameHistory().addActionListener(e -> {
             viewHistory.loadHistoryFromFile();
             viewHistory.setVisible(true);
+            viewHistory.setLocationRelativeTo(null);
         });
         viewMenu.getBtnExit().addActionListener(e -> {
            System.exit(0);
@@ -284,7 +289,7 @@ public class BingoController {
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
            BingoModel.logEvent("Game Start !!!");
            BingoModel.logEvent("Player "  + currentPlayer + " Turn");
-            
+           
             Component[] tileButtons = viewBingo.getBoard().getComponents();
             for (Component comp : tileButtons) {
                 
