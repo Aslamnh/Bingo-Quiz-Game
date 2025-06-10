@@ -473,7 +473,10 @@ public class BingoModel {
         }
     }
             //game log
-            
+            private static boolean gameOver = false;
+        public static void setGameOver(boolean over) {
+        gameOver = over;
+    }
             
              public static StringBuilder gameLog = new StringBuilder();
              private static JTextArea logArea;  
@@ -482,6 +485,7 @@ public class BingoModel {
                 this.logArea = logArea;
             }
         public static void logEvent(String message) {
+            if (gameOver) return;
             gameLog.append(message).append("\n");
 
             if (logArea != null) {
