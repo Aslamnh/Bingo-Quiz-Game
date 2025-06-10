@@ -21,6 +21,8 @@ import javax.swing.*;
  */
 
 // semua struktur kode atau penyimpanan variabel disini
+
+
 class Player {
     private String name;
     private int winCount = 0;
@@ -115,7 +117,8 @@ class BingoBoard {
         if (menang) {
             //System.out.println(playerName + " menang");
             String[] bingo = {"B", "I", "N", "G", "O"};
-            // Cek baris
+            
+            
             for (int i = 0; i < 5; i++) {
                 if (rowCount[i] == 5) {
                     for (int j = 0; j < 5; j++) {
@@ -126,7 +129,7 @@ class BingoBoard {
                 }
             }
 
-            // Cek kolom
+            
             for (int j = 0; j < 5; j++) {
                 if (colCount[j] == 5) {
                     for (int i = 0; i < 5; i++) {
@@ -137,7 +140,7 @@ class BingoBoard {
                 }
             }
 
-            // Cek diagonal utama
+            
             if (mainDiagonalCount == 5) {
                 for (int i = 0; i < 5; i++) {
                     tiles[i][i].getLabel().setText(bingo[i]);
@@ -146,7 +149,7 @@ class BingoBoard {
                 return true;
             }
 
-            // Cek diagonal sekunder
+            
             if (antiDiagonalCount == 5) {
                 for (int i = 0; i < 5; i++) {
                     tiles[i][4-i].getLabel().setText(bingo[i]);
@@ -157,6 +160,7 @@ class BingoBoard {
         }
         return false;
     }
+    
 
     public void markTile(int number, int player) {
         for (int i = 0; i < 5; i++) {
@@ -461,9 +465,9 @@ public class BingoModel {
         }
     }
         
-            public static void clearHistory() {    
+        public static void clearHistory() {       
         try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", false))) {
-            writer.write("");
+            writer.write("No History Found");
         } catch (IOException e) {
             System.err.println("Failed to clear history");
         }

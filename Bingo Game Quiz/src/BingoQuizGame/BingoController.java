@@ -133,21 +133,22 @@ public class BingoController {
             playerX1.incrementWinCount();
             viewBingo.getwin1Field().setText(Integer.toString(playerX1.getWinCount()));
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX1);
+            viewBingo.getbtnTryAgain().setEnabled(true);
+            System.out.println("hey");
             BingoModel.logEvent("Player 1 wins!");
             JOptionPane.showMessageDialog(viewBingo, "Player 1 wins!");
-            viewBingo.getbtnTryAgain().setEnabled(true);
         } else if(playerX2.getName().equals(Integer.toString(currentPlayer))){
             playerX2.incrementWinCount();
             viewBingo.getwin2Field().setText(Integer.toString(playerX2.getWinCount()));
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+            viewBingo.getbtnTryAgain().setEnabled(true);
             BingoModel.logEvent("Player 2 wins!");
             JOptionPane.showMessageDialog(viewBingo, "Player 2 wins!");
-            viewBingo.getbtnTryAgain().setEnabled(true);
         } else if (model.getBoard().checkTie()) {
             BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+            viewBingo.getbtnTryAgain().setEnabled(true);
             BingoModel.logEvent("Tie");
             JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
-            viewBingo.getbtnTryAgain().setEnabled(true);
         }
     }
 
@@ -275,7 +276,7 @@ public class BingoController {
         });
         
         viewMenu.getBtnGameHistory().addActionListener(e -> {
-            viewHistory.loadHistoryFromFile();
+            viewHistory.loadHistory();
             viewHistory.setVisible(true);
             viewHistory.setLocationRelativeTo(null);
         });
@@ -339,12 +340,13 @@ public class BingoController {
                                     BingoModel.logEvent("Player "  + currentPlayer + " is Correct!");
                                     JOptionPane.showMessageDialog(viewQuiz, "Correct!");
                                     handleSubmit();
-                                    viewQuiz.dispose();
-                                    changePlayerTurn();
-                                    if(model.getBoard().checkWin(currentPlayer)){
+                                    if (model.getBoard().checkWin(currentPlayer)) {
                                         checkWin(); //method controller, beda dengan di model
                                         changePlayerTurn();
-                                    } 
+                                    }
+                                    viewQuiz.dispose();
+                                    changePlayerTurn();
+
                                 } else {
                                     BingoModel.logEvent("Player "  + currentPlayer + " is wrong!");
                                     JOptionPane.showMessageDialog(viewQuiz, "Wrong answer!");
@@ -416,7 +418,7 @@ public class BingoController {
         
         viewHistory.getBtnClear().addActionListener(e -> {
             BingoModel.clearHistory();
-            viewHistory.loadHistoryFromFile();
+            viewHistory.loadHistory();
         });
         
         viewHistory.getBtnBack().addActionListener(e -> {
