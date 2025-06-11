@@ -441,7 +441,8 @@ public class BingoModel {
             writer.write("Round " + round + ":" + "\n");
             writer.printf("Player %s wins in %d turns - %s \n", win.getName(), win.getPlayerTurn(), currentDate);
             writer.write("Score:" + "\n");
-            writer.printf("%-9s:%9s\n\n", p1.getName(), p2.getName());
+            writer.printf("Player %s:Player %s\n\n", p1.getName(), p2.getName());
+            writer.printf("%-9s:%9s\n\n", p1.getWinCount(), p2.getWinCount());
             
             //writer.write(+ " - " + currentDate + "\n");
         } catch (IOException e) {
@@ -457,7 +458,7 @@ public class BingoModel {
             writer.write("Round " + round + ":" + "\n");
             writer.printf("Player %s tied with Player %s with %d turns - %s \n", p1.getName(), p2.getName(), p2.getPlayerTurn(), currentDate);
             writer.write("Score: " + "\n");
-            writer.printf("%-9s:%9s\n\n", p1.getName(), p2.getName());
+            writer.printf("Player %s:Player %s\n\n", p1.getName(), p2.getName());
             writer.printf("%-9s:%9s\n\n", p1.getWinCount(), p2.getWinCount());
             //writer.write(+ " - " + currentDate + "\n");
         } catch (IOException e) {
@@ -467,7 +468,7 @@ public class BingoModel {
         
         public static void clearHistory() {       
         try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", false))) {
-            writer.write("No History Found");
+            writer.write("");
         } catch (IOException e) {
             System.err.println("Failed to clear history");
         }

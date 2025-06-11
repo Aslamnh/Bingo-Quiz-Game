@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +26,7 @@ public class HistoryView extends javax.swing.JFrame {
             sb.append(line).append("\n");
         }
     } catch (IOException e) {
-        sb.append("No History found.");
+        sb.append("No History Found");
     }
     jTextArea1.setText(sb.toString());
 }
@@ -143,7 +144,7 @@ public class HistoryView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnClearActionPerformed
 
     /**

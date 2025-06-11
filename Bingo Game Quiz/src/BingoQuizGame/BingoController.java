@@ -100,12 +100,17 @@ public class BingoController {
     }
      
     private void timeUp() {
+        Component[] tileButtons = viewBingo.getBoard().getComponents();
         JOptionPane.showMessageDialog(quizFrame, "Time's up! Your answer is not submitted.");
         // Add logic for what happens when time is up (e.g., mark square as failed, move to next question)
         BingoModel.logEvent("Player "  + currentPlayer + " was late, tile is not mark");
         viewQuiz.resetQuiz();
         viewQuiz.dispose();
         changePlayerTurn();
+        for (Component comps : tileButtons) {
+            comps.setEnabled(true);
+        }
+        
     }
     
     private void changePlayerTurn() {
@@ -293,6 +298,7 @@ public class BingoController {
             viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             model.setBoard(new BingoBoard(viewBingo.getBoard()));
            BingoModel.logEvent("Game Start !!!");
+           System.out.println(playerX1.getWinCount() + " " + playerX2.getWinCount());
            BingoModel.logEvent("Player "  + currentPlayer + " Turn");
            viewBingo.getBtnEndGame().setEnabled(true);
             Component[] tileButtons = viewBingo.getBoard().getComponents();
@@ -325,10 +331,14 @@ public class BingoController {
                         viewQuiz.setTurnLabel("Current Turn: Player " + currentPlayer);
                         viewQuiz.setVisible(true);
                         setupTimer(); //memulai timer untuk quiznya
+                        for (Component comps : tileButtons) {
+                            comps.setEnabled(false);
+                        }
                         
                         //membersihkan action listener yang terbuat lebih dari 1
                         for (ActionListener al : viewQuiz.getBtnConfirm().getActionListeners()) {
                             viewQuiz.getBtnConfirm().removeActionListener(al);
+                            
                         }
                         viewQuiz.getBtnConfirm().addActionListener(e2 -> {
                             //System.out.println("Adding new ActionListener...");
@@ -340,12 +350,16 @@ public class BingoController {
                                 //cek jika answer sama
                                 if (input == answer) {
                                     //System.out.println("Player " + currentPlayer);
+                                    for (Component comps : tileButtons) {
+                                        comps.setEnabled(true);
+                                    }
                                     model.getBoard().markTile(tileNumber, currentPlayer);
                                     BingoModel.logEvent("Player "  + currentPlayer + " is Correct!");
                                     JOptionPane.showMessageDialog(viewQuiz, "Correct!");
                                     handleSubmit();
                                     if (model.getBoard().checkWin(currentPlayer)) {
                                         checkWin(); //method controller, beda dengan di model
+                                        System.out.println(playerX1.getWinCount() + " " + playerX2.getWinCount());
                                         changePlayerTurn();
                                     }
                                     viewQuiz.dispose();
@@ -361,6 +375,7 @@ public class BingoController {
                             } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(viewQuiz, "Please enter a valid number.");
                             }
+                            
                         });
                     });
                 }
@@ -372,6 +387,7 @@ public class BingoController {
             model.getBoard().resetGame();
             viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             viewBingo.getbtnTryAgain().setEnabled(false);
+            viewBingo.getBtnEndGame().setEnabled(true);
            //belom dimasukkin pertanyaannya
         
         });
@@ -389,6 +405,7 @@ public class BingoController {
             if (!(playerX1 == null || playerX2 == null)) {
                 BingoModel.writeHistory(playerX1, playerX2); 
                 if(model.getBoard().checkTie()){
+                System.out.println("tie");
                  BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
             }
         }
@@ -406,6 +423,7 @@ public class BingoController {
         viewHistory.getBtnClear().addActionListener(e -> {
             BingoModel.clearHistory();
             viewHistory.loadHistory();
+            JOptionPane.showMessageDialog(viewHistory, "History Cleared!");
         });
         
         viewHistory.getBtnBack().addActionListener(e -> {
