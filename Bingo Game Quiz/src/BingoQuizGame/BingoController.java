@@ -362,13 +362,13 @@ public class BingoController {
                                         //System.out.println(playerX1.getWinCount() + " " + playerX2.getWinCount());
                                         changePlayerTurn();
                                     }
-//                                    if (currentTurn == 25 && model.getBoard().checkTie()) {
-//                                        BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
-//                                        viewBingo.getbtnTryAgain().setEnabled(true);
-//                                        BingoModel.logEvent("Tie");
-//                                        BingoModel.setGameOver(true);
-//                                        JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
-//                                    }
+                                    if (currentTurn == 25 && model.getBoard().checkTie()) {
+                                        BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+                                        viewBingo.getbtnTryAgain().setEnabled(true);
+                                        BingoModel.logEvent("Tie");
+                                        BingoModel.setGameOver(true);
+                                        JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
+                                    }
                                     viewQuiz.dispose();
                                     changePlayerTurn();
 
