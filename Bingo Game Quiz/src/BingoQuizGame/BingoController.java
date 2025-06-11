@@ -6,6 +6,7 @@ package BingoQuizGame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import javax.swing.*;
 
 /**
@@ -350,6 +351,10 @@ public class BingoController {
         viewBingo.getbtnTryAgain().addActionListener(e -> {
             currentRound++;
             model.getBoard().resetGame();
+            playerX1.setPlayerTurn(0);
+            playerX2.setPlayerTurn(0);
+            currentTurn = 1;
+            
             viewBingo.getroundCountField().setText(Integer.toString(currentRound));
             viewBingo.getbtnTryAgain().setEnabled(false);
             viewBingo.getBtnEndGame().setEnabled(true);
@@ -368,17 +373,16 @@ public class BingoController {
                  }
 
                 if (!(playerX1 == null || playerX2 == null)) {
-                    model.writeHistory(playerX1, playerX2); 
-                    if(model.getBoard().checkTie()){
-                        model.writeHistory(currentRound, playerX1, playerX2, playerX2);
+                    model.writeHistory(currentRound, playerX1, playerX2, playerX2);
                 }
-            }
+            
            
             viewBingo.getBtnEndGame().setEnabled(false);
             //System.exit(0);
         });
         
         viewBingo.getBtnBack().addActionListener(e -> {
+            model.writeHistory(playerX1, playerX2); 
             viewBingo.dispose();    
         });
         

@@ -1,2 +1,50 @@
 Match between Player 1 and Player 2 is a tie with both having 0 wins - 06/11/25 01:39:46 pm WIB
 
+Round 1:
+Player 1 wins in 9 turns - 06/11/25 01:43:30 PM WIB 
+Score:
+Player 1:Player 2
+
+1        :        0
+
+Round 2:
+Player 2 wins in 11 turns - 06/11/25 01:43:33 PM WIB 
+Score:
+Player 1:Player 2
+
+1        :        0
+
+Player 1 Won the game with 1 wins against 2 - 06/11/25 01:43:33 PM WIB
+
+Round 1:
+Player 1 wins in 9 turns - 06/11/25 01:48:06 PM WIB 
+Score:
+Player 1:Player 2
+
+1        :        0
+
+Round 1:
+Player 2 wins in 0 turns - 06/11/25 01:48:09 PM WIB 
+Score:
+Player 1:Player 2
+
+0        :        0
+
+Match between Player 1 and Player 2 is a tie with both having 0 wins - 06/11/25 01:48:10 PM WIB
+
+Round 1:
+Player 2 wins in 12 turns - 06/11/25 01:50:04 PM WIB 
+Score:
+Player 1:Player 2
+
+0        :        1
+
+Round 2:
+Player 2 wins in 0 turns - 06/11/25 01:50:08 PM WIB 
+Score:
+Player 1:Player 2
+
+0        :        1
+
+Player 2 Won the game with 1 wins against 1 - 06/11/25 01:50:08 PM WIB
+
