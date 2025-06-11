@@ -115,6 +115,8 @@ public class BingoController {
     
     private void changePlayerTurn() {
         currentTurn++;
+        playerX1.incrementTurn();
+        playerX2.incrementTurn();
         currentPlayer = (currentPlayer == 1) ? 2 : 1;
         viewQuiz.setTurnLabel("Current Turn: Player " + currentPlayer);
         //System.out.println("Player: " + currentPlayer);

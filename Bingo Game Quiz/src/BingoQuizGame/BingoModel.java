@@ -60,6 +60,10 @@ class Player {
         winCount++;
     }
     
+    public void incrementTurn() {
+        playerTurn++;
+    }
+    
 }
 class BingoBoard {
     private BingoTile[][] tiles = new BingoTile[5][5];
