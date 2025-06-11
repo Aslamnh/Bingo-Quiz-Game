@@ -117,7 +117,7 @@ public class BingoController {
         currentTurn++;
         currentPlayer = (currentPlayer == 1) ? 2 : 1;
         viewQuiz.setTurnLabel("Current Turn: Player " + currentPlayer);
-        System.out.println("Player: " + currentPlayer);
+        //System.out.println("Player: " + currentPlayer);
         BingoModel.logEvent("Player "  + currentPlayer + " Turn");
     }
     
@@ -359,9 +359,16 @@ public class BingoController {
                                     handleSubmit();
                                     if (model.getBoard().checkWin(currentPlayer)) {
                                         checkWin(); //method controller, beda dengan di model
-                                        System.out.println(playerX1.getWinCount() + " " + playerX2.getWinCount());
+                                        //System.out.println(playerX1.getWinCount() + " " + playerX2.getWinCount());
                                         changePlayerTurn();
                                     }
+//                                    if (currentTurn == 25 && model.getBoard().checkTie()) {
+//                                        BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
+//                                        viewBingo.getbtnTryAgain().setEnabled(true);
+//                                        BingoModel.logEvent("Tie");
+//                                        BingoModel.setGameOver(true);
+//                                        JOptionPane.showMessageDialog(viewBingo, "It's a tie!");
+//                                    }
                                     viewQuiz.dispose();
                                     changePlayerTurn();
 
@@ -395,7 +402,7 @@ public class BingoController {
             BingoModel.logEvent("== End game ==");
             viewBingo.getbtnTryAgain().setEnabled(true);
             
-             Component[] comps = viewBingo.getBoard().getComponents();
+        Component[] comps = viewBingo.getBoard().getComponents();
          for (Component c : comps) {
         if (c instanceof JButton) {
             ((JButton) c).setEnabled(false);
@@ -405,7 +412,6 @@ public class BingoController {
             if (!(playerX1 == null || playerX2 == null)) {
                 BingoModel.writeHistory(playerX1, playerX2); 
                 if(model.getBoard().checkTie()){
-                System.out.println("tie");
                  BingoModel.writeHistory(currentRound, playerX1, playerX2, playerX2);
             }
         }

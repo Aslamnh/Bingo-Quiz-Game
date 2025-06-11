@@ -200,9 +200,9 @@ class BingoBoard {
             if (!tiles[i][j].getMarked()) {
                 return false;
             }
-            if (!tiles[i][j].getLabel().getBackground().equals(Color.yellow)) {
-                return false;
-            }
+//            if (!tiles[i][j].getLabel().getBackground().equals(Color.yellow)) {
+//                return false;
+//            }
         }
     }
     return true;
