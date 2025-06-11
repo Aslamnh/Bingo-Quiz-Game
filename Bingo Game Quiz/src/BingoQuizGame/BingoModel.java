@@ -21,8 +21,7 @@ import javax.swing.*;
  */
 
 // semua struktur kode atau penyimpanan variabel disini
-
-
+// objek-objek (Player, BingoBoard, BingoTile, Quiz) dibuat Aslam
 class Player {
     private String name;
     private int winCount = 0;
@@ -65,6 +64,7 @@ class Player {
     }
     
 }
+
 class BingoBoard {
     private BingoTile[][] tiles = new BingoTile[5][5];
    // BingoView bingoview = new BingoView();
@@ -90,6 +90,8 @@ class BingoBoard {
     public BingoTile[][] getTiles() {
         return tiles;
     }
+    
+    //Dibuat Razy dan Zienard
     public boolean checkWin(int player) {
 	int[] rowCount = new int[5];
         int[] colCount = new int[5];
@@ -109,17 +111,12 @@ class BingoBoard {
                     if (rowCount[i] == 5 || colCount[j] == 5 || mainDiagonalCount == 5 || antiDiagonalCount == 5) {
    
                     menang = true;
-                  
-                   //  playerX.incrementWinCount();
-                     //bingoview.getwin2Field().setText(Integer.toString(playerX.getWinCount()));
-        
                     }
                 }
             }
         }   
         
         if (menang) {
-            //System.out.println(playerName + " menang");
             String[] bingo = {"B", "I", "N", "G", "O"};
             
             
@@ -132,7 +129,6 @@ class BingoBoard {
                     return true;
                 }
             }
-
             
             for (int j = 0; j < 5; j++) {
                 if (colCount[j] == 5) {
@@ -143,7 +139,6 @@ class BingoBoard {
                     return true;
                 }
             }
-
             
             if (mainDiagonalCount == 5) {
                 for (int i = 0; i < 5; i++) {
@@ -152,7 +147,6 @@ class BingoBoard {
                 }
                 return true;
             }
-
             
             if (antiDiagonalCount == 5) {
                 for (int i = 0; i < 5; i++) {
@@ -177,8 +171,8 @@ class BingoBoard {
         checkWin(player);    
     }
         
-        public void resetGame(){
-               this.model = new BingoModel(); // reset angka
+    public void resetGame(){
+        this.model = new BingoModel(); // reset angka
         Integer[] numbers = model.generateRandomNumbers();
         Component[] comps = board.getComponents();
         int pos = 0;
@@ -192,27 +186,20 @@ class BingoBoard {
                 button.setEnabled(true);
                 button.setBackground(null);
         
+            }
+        }   
     }
-        }
         
-      
-        
-}
     public boolean checkTie() {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             if (!tiles[i][j].getMarked()) {
                 return false;
             }
-//            if (!tiles[i][j].getLabel().getBackground().equals(Color.yellow)) {
-//                return false;
-//            }
         }
     }
     return true;
 }
-   
-    
    
 }
 class BingoTile {
@@ -264,6 +251,8 @@ class BingoTile {
 
         
 }
+
+//Sistem quiz dan difficulty dibuat Aslam
 class Quiz {
     Random random = new Random();
     private char operator;
@@ -334,6 +323,7 @@ class Hard extends Quiz {
         super(addSubMin, addSubMax, mulDivMin, mulDivMax);
     }
 }
+
 class Question {
     private String text;
     private int answer;
@@ -350,11 +340,13 @@ class Question {
         return answer;
     }
 }
+
 public class BingoModel {
     Random random = new Random();
     private Player[] players = new Player[2];
     private BingoBoard board;
     private Quiz difficulty;
+    private HistoryWriter historyWriter = new GameHistory();
 
     public BingoBoard getBoard() {
         return board;
@@ -369,12 +361,15 @@ public class BingoModel {
 //        Collections.shuffle(numberList);
         return numberList.toArray(new Integer[0]);
     }
+    
     public void setDifficulty(Quiz q) {
         this.difficulty = q;
     }
+    
     public void setBoard(BingoBoard board) {
         this.board = board;
     }
+    
     public Question generateQuiz() {
         Quiz d = difficulty;
         String s = "What is ";
@@ -407,6 +402,7 @@ public class BingoModel {
         }
         return new Question(s, ans);    
     }
+    
     public void generateQuizForTiles() {
         BingoTile[][] tiles = board.getTiles();
         for (int i = 0; i < 5; i++) {
@@ -417,86 +413,45 @@ public class BingoModel {
         }
     }
 
-    public static void writeHistory(Player p1, Player p2) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss a z");
-        String currentDate = ZonedDateTime.now().format(formatter);
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", true))) {
-        if (p1.getWinCount() > p2.getWinCount()){
-            writer.write("Player " + p1.getName() + " Won the game with " + p1.getWinCount() + " wins against " + p2.getName() + " - " + currentDate + "\n\n");
-        } else
-        if (p2.getWinCount() > p1.getWinCount()){
-            writer.write("Player " + p2.getName() + " Won the game with " + p2.getWinCount() + " wins against " + p1.getName() + " - " + currentDate + "\n\n");
-        } else
-        if (p1.getWinCount() == p2.getWinCount()) {
-            writer.write("Match between Player " + p1.getName() + " and Player " + p2.getName() + " is a tie with both having " + p1.getWinCount() + " wins - " + currentDate + "\n\n");
-        }
-        } catch (IOException e) {
-            System.err.println("Failed to write game history: " + e.getMessage() + " - " + currentDate);
-        }
-
+    //History keseluruhan
+    public void writeHistory(Player p1, Player p2) {
+        historyWriter.writeHistory(p1, p2);
     }
 
-    public static void writeHistory(int round, Player p1, Player p2, Player win) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss a z");
-        String currentDate = ZonedDateTime.now().format(formatter);
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", true))) {
-            writer.write("Round " + round + ":" + "\n");
-            writer.printf("Player %s wins in %d turns - %s \n", win.getName(), win.getPlayerTurn(), currentDate);
-            writer.write("Score:" + "\n");
-            writer.printf("Player %s:Player %s\n\n", p1.getName(), p2.getName());
-            writer.printf("%-9s:%9s\n\n", p1.getWinCount(), p2.getWinCount());
-            
-            //writer.write(+ " - " + currentDate + "\n");
-        } catch (IOException e) {
-            System.err.println("Failed to write game history: " + e.getMessage() + " - " + currentDate);
-        }
+    //History jika menang
+    public void writeHistory(int round, Player p1, Player p2, Player win) {
+        historyWriter.writeHistory(round, p1, p2, win);
     }
 
-        public static void writeHistory(int round, Player p1, Player p2) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss a z");
-        String currentDate = ZonedDateTime.now().format(formatter);
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", true))) {
-            writer.write("Round " + round + ":" + "\n");
-            writer.printf("Player %s tied with Player %s with %d turns - %s \n", p1.getName(), p2.getName(), p2.getPlayerTurn(), currentDate);
-            writer.write("Score: " + "\n");
-            writer.printf("Player %s:Player %s\n\n", p1.getName(), p2.getName());
-            writer.printf("%-9s:%9s\n\n", p1.getWinCount(), p2.getWinCount());
-            //writer.write(+ " - " + currentDate + "\n");
-        } catch (IOException e) {
-            System.err.println("Failed to write game history: " + e.getMessage() + " - " + currentDate);
-        }
+    //History jika tie
+    public void writeHistory(int round, Player p1, Player p2) {
+        historyWriter.writeHistory(round, p1, p2);
     }
         
-        public static void clearHistory() {       
-        try (PrintWriter writer = new PrintWriter(new FileWriter("history.txt", false))) {
-            writer.write("");
-        } catch (IOException e) {
-            System.err.println("Failed to clear history");
-        }
+    public void clearHistory() {       
+        historyWriter.clearHistory();
     }
-            //game log
-            private static boolean gameOver = false;
-        public static void setGameOver(boolean over) {
+    
+    //Game Log (dibuat Razy)
+    private static boolean gameOver = false;
+    public static void setGameOver(boolean over) {
         gameOver = over;
     }
-            
-             public static StringBuilder gameLog = new StringBuilder();
-             private static JTextArea logArea;  
+    
+    public static StringBuilder gameLog = new StringBuilder();
+    private static JTextArea logArea;
+    
+    public  void setLogArea(JTextArea logArea) {
+        this.logArea = logArea;
+    }
+    
+    public static void logEvent(String message) {
+        if (gameOver) return;
+        gameLog.append(message).append("\n");
         
-            public  void setLogArea(JTextArea logArea) {
-                this.logArea = logArea;
-            }
-        public static void logEvent(String message) {
-            if (gameOver) return;
-            gameLog.append(message).append("\n");
-
-            if (logArea != null) {
-                logArea.setText(gameLog.toString());
-            }
-           }
-
+        if (logArea != null) {
+            logArea.setText(gameLog.toString());
+        }
+    }
     
 }

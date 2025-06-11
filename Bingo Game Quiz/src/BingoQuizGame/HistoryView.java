@@ -16,8 +16,6 @@ import javax.swing.JOptionPane;
  */
 public class HistoryView extends javax.swing.JFrame {
     
-
-
     public void loadHistory() {
     StringBuilder sb = new StringBuilder();
     try (BufferedReader reader = new BufferedReader(new FileReader("history.txt"))) {
